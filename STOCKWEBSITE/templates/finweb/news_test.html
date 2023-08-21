@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<style>
+		body
+		{
+		 background-image:url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pptjia.com%2Fimage%2F20180321%2F388ab9a0b82be807d876ac2aa0271a2e.png&refer=http%3A%2F%2Fimg.pptjia.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1643815617&t=5e54b6b0e51313b158f6d99e5cefd2a6');
+		 /* background-color:#b0c4de; */
+		 background-repeat:repeat;
+		 background-position:right bottom;
+		 margin-right:200px;
+		 background-size:cover;
+		}
+	</style>
+	<style>
+		body
+		{
+		 background-image:url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pptjia.com%2Fimage%2F20180321%2F388ab9a0b82be807d876ac2aa0271a2e.png&refer=http%3A%2F%2Fimg.pptjia.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1643815617&t=5e54b6b0e51313b158f6d99e5cefd2a6');
+		 /* background-color:#b0c4de; */
+		 background-repeat:repeat;
+		 background-position:right bottom;
+		 margin-right:200px;
+		 background-size:cover;
+		}
+	</style>
+    <title>Title</title>
+         {% load static %}
+<!-- Le styles -->
+   <link href="{%static "finweb/css/bootstrap-combined.min.css"%}" rel="stylesheet">
+
+   <!--[if lt IE 9]>
+		<script src="{%static "finweb/js/html5shiv.js"%}"></script>
+	<![endif]-->
+
+	<script type="text/javascript" src="{% static "finweb/js/jquery-2.0.0.min.js" %}"></script>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="{% static "finweb/js/bootstrap.min.js"%}"></script>
+
+    <script type="text/javascript" src="{%static "finweb/js/scripts.js"%}"></script>
+</head>
+<body>
+           <div class="row-fluid">
+                {% for news in news_list1 %}
+    　　　　　　
+				<div class="span4">
+					<h3>
+						　{{ news.title }}
+					</h3>
+					<p>
+						{{ news.content }}
+					</p>
+					<p class="pull-left">
+						<a class="btn" href="{{ news.url }}">查看更多 »</a>
+					</p>
+                    <p class="pull-right">
+                    <span>时间：{{ news.time }}</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>分类：{{ news.classify  }}</span>
+                    </p>
+
+				</div>
+                {% empty %}
+                <h3>获取新闻失败，请重试</h3>
+                {% endfor %}
+
+			</div>
+             <div class="row-fluid">
+                {% for news in news_list2 %}
+    　　　　　　
+				<div class="span4">
+					<h3>
+						　{{ news.title }}
+					</h3>
+					<p>
+						{{ news.content }}
+					</p>
+					<p class="pull-left">
+						<a class="btn" href="{{ news.url }}">查看更多 »</a>
+					</p>
+                    <p class="pull-right">
+                    <span>时间：{{ news.time }}</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>分类：{{ news.classify  }}</span>
+                    </p>
+
+				</div>
+
+                {% empty %}
+                <h3>获取新闻失败，请重试</h3>
+                {% endfor %}
+
+			</div>
+
+
+
+</body>
+</html>

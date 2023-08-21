@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+		body
+		{
+		 background-image:url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pptjia.com%2Fimage%2F20180321%2F388ab9a0b82be807d876ac2aa0271a2e.png&refer=http%3A%2F%2Fimg.pptjia.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1643815617&t=5e54b6b0e51313b158f6d99e5cefd2a6');
+		 /* background-color:#b0c4de; */
+		 background-repeat:repeat;
+		 background-position:right bottom;
+		 margin-right:200px;
+		 background-size:cover;
+		}
+	</style>
+	<title>量化投资</title>
+     {% load static %}
+<!-- Le styles -->
+    <link href="{%static "finweb/css/bootstrap-combined.min.css"%}" rel="stylesheet">
+
+	<link rel="stylesheet" href="{%static "finweb/css/bootstrap-datetimepicker.min.css"%}">
+   <!--[if lt IE 9]>
+		<script src="{%static "finweb/js/html5shiv.js"%}"></script>
+	<![endif]-->
+
+	<script type="text/javascript" src="{% static "finweb/js/jquery-2.0.0.min.js" %}"></script>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="{% static "finweb/js/bootstrap.min.js"%}"></script>
+
+    <script type="text/javascript" src="{%static "finweb/js/scripts.js"%}"></script>
+
+
+
+	 <script src= "{% static "finweb/js/bootstrap-datetimepicker.js" %}"> </script>
+	 <script src="{%static "finweb/js/locales/bootstrap-datetimepicker.zh-CN.js"%}"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+            <div>
+              <h2>
+			  <img src="{%static "finweb/img/logo.png"%}" class="img-circle" width="220" height="160"/>——股票投资辅助系统 </h2>
+            </div>
+            <hr>
+			<p class="text-left">
+			</p>
+			<div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+
+					   <a class="btn btn-navbar" data-target=".navbar-responsive-collapse" data-toggle="collapse"></a>
+
+                        <a class="brand" href="#">每日新选</a>
+						<div class="nav-collapse collapse navbar-responsive-collapse">
+							<ul class="nav">
+								<li>
+									<a href="{% url 'index'%}">主页</a>
+								</li>
+								<li>
+									<a href="{% url 'stockinfo' %}">个股信息</a>
+								</li>
+								<li >
+									<a href="{% url 'operate' %}">股票操作</a>
+								</li>
+								<li class="active">
+									<a href="{% url 'quant'%}">量化投资</a>
+								</li>
+								<li>
+									<a href="{% url 'userinfo' %}">用户信息管理</a>
+								</li>
+							</ul>
+							<ul class="nav pull-right">
+						      <li class="dropdown pull-right">
+								  {% if user.is_authenticated %}
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">欢迎，{{ user.username }}</a>
+									<ul class="dropdown-menu" >
+										<li>
+											<a href="{% url 'changepassword' %}">修改密码</a>
+										</li>
+										<li>
+											<a href="{% url 'changeinfo' %}">修改个人信息</a>
+										</li>
+										<li>
+											<a href="{% url 'logout' %}">退出</a>
+										</li>
+									</ul>
+								  {% else %}
+								    <a href="#" data-toggle="dropdown" class="dropdown-toggle">登录/注册</a>
+									<ul class="dropdown-menu" >
+										<li>
+											<a href="{% url 'login' %}">登录</a>
+										</li>
+										<li>
+											<a href="{% url 'register'%}">注册</a>
+										</li>
+									</ul>
+								  {% endif %}
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</div>
+            <hr>
+            <br/>
+            <br/>
+            <div class="row-fluid">
+            <div
+            style="border-right: 7px groove;
+            border-top: 7px groove;
+            background: transprant;
+            border-left: 7px groove;
+           border-bottom: 7px groove;
+            height: 425px"
+            align=left
+            class="span2">
+          <ul class="nav nav-list">
+            <li class="nav-header">量化投资 </li>
+             <li class="divider"> </li>
+            <li> <a href="{% url 'quant' %}">选择组合</a> </li>
+              <li class="divider"> </li>
+			  <li class="active"> <a href="{% url 'stock_ratio' %}">投资建议</a> </li>
+			    <li class="divider"> </li>
+          </ul>
+        </div>
+        <div class="span1"></div>
+		<div class="span9"
+		style="BORDER-RIGHT: 3px inset;
+          BORDER-TOP: 3px inset;
+          BACKGROUND: #ffffff;
+          BORDER-LEFT: 3px inset;
+          height:425px
+          BORDER- BOTTOM: 3px inset;
+          align=left ">
+        <div class="span11">
+         	<div>
+		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3> &nbsp; &nbsp; &nbsp; &nbsp;{{ p_name }}/资产配置</h3>
+        <hr>
+        <br/>
+      </div>
+
+			<h4>&nbsp;&nbsp;&nbsp;&nbsp;选择时间区间：</h4><br/>
+			<div class="span12">
+				<div class="span1"></div>
+				<div class="span3">
+					  <div class="control-group">
+
+          <!-- Text input-->
+      <label class="control-label" >起始时间：</label>
+          <div class="controls">
+
+			  <!-- <div class="input-append date form_datetime"  id="datetimeStart"> -->
+			  <!-- <div class="input-append date"  id="datetimeStart"> -->
+			  <input type="date" id="input_from" name="start">
+				
+			  <!-- <form action="/action_page.php"> -->
+			    
+				<!-- <input type="submit"> -->
+			  <!-- </form> -->
+				
+
+    <!-- <input size="16" type="text" value="" readonly id="input_from"> -->
+    <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+    <!-- <span class="add-on" id="from"><i class="icon-calendar" id="i_from"></i></span> -->
+<!-- </div> -->
+          </div>
+      </div>
+
+				</div>
+				<div class="span1"></div>
+				<div class="span3">
+							 <div class="control-group">
+
+          <!-- Text input-->
+      <label class="control-label" >结束时间：</label>
+          <!-- <div class="controls">
+
+
+			  <div class="input-append date form_datetime" id="datetimeEnd" >
+                <input size="16" type="text" value="" readonly id="input_to">
+                 <span class="add-on"><i class="icon-remove"></i></span>
+				  <span class="add-on" id="to"><i class="icon-calendar" id="i_to"></i></span>
+              </div>
+          </div> -->
+		  <input type="date" id="input_to" name="end">
+      </div>
+
+				</div>
+				<div class="span1"></div>
+				<div class="span3">
+						 <div class="control-group">
+
+          <!-- Text input-->
+      <label class="control-label" ></label>
+          <div class="controls">
+            <br/>
+   <!-- <button class="btn btn-primary" id="ratio_btn">开始分析</button> -->
+
+   <button type="button" onclick="analysis()">开始分析</button>
+   
+
+
+
+          </div>
+      </div>
+
+				</div>
+
+			</div>
+			<div id="ratio_result">
+             <h4>&nbsp;&nbsp;&nbsp;&nbsp;分析结果：</h4><br/>
+                <div class="span12">
+				<div class="span1"></div>
+				<div class="span5">
+                         <table class="table table-hover table-striped table-condensed">
+							  <caption>最大夏普比率</caption>
+			  <thead>
+			  <tr>
+				  <th>代码</th>
+            	  <th>股票名</th>
+				  <th>起始价格</th>
+				  <th>推荐比例</th>
+
+			  </tr>
+               </thead>
+   			<tbody id="sharpe">
+
+           </tbody>
+		  </table><br/>
+
+					<span id="s_exp_return"></span><br/>
+					<span id="s_exp_variance"></span><br/>
+					<span id="s_sharpe"></span>
+				</div>
+				<div class="span1"></div>
+				<div class="span5">
+                         <table class="table table-hover table-striped table-condensed">
+							  <caption>最小风险</caption>
+			  <thead>
+			  <tr>
+				  <th>代码</th>
+            	  <th>股票名</th>
+				  <th>起始价格</th>
+				  <th>推荐比例</th>
+
+			  </tr>
+               </thead>
+   			<tbody id="variance">
+
+           </tbody>
+		  </table><br/>
+
+					<span id="v_exp_return"></span><br/>
+					<span id="v_exp_variance"></span><br/>
+					<span id="v_sharpe"></span>
+				</div>
+
+
+			</div>
+			</div>
+
+
+
+
+        <hr/>
+				<div >
+		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3> &nbsp; &nbsp; &nbsp; &nbsp;{{ p_name }}/收益回测</h3>
+        <hr>
+        <br/>
+					<div class="span12">
+						<div class="span2"></div>
+						<div class="span8">
+							 <div id="container" style="width:540px;height:320px"></div>
+							<br/><br/><br/><br/><br/><br/>
+						</div>
+						<div class="span2"></div>
+
+					</div>
+
+      </div>
+
+
+        </div>
+
+        <div class="span1"> </div>
+			</div>
+
+      </div>
+
+        </div>
+	</div>
+</div>
+
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9KyUoYdA9bR6dMxeZKg9vDb16Ux5Ogap"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<head>
+	    <meta charset="UTF-8">
+	    <title>Awesome-pyecharts</title>
+	    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+	
+</head>
+
+
+<script type="text/javascript">
+	function analysis(){
+		var from = $("#input_from").val();
+		var to = $("#input_to").val();
+		from = from.replace('-','')
+		from = from.replace('-','')
+		to = to.replace('-','')
+		to = to.replace('-','')
+		if( from == '' || to == '')
+		{
+			if( from == ''){
+			alert("请选择起始日期");
+			}
+			if( to == ''){
+			alert("请选择结束日期");
+			}
+		}
+		else
+		{
+		$.getJSON('/finweb/get_stock_ratio/',{'from':from,'to':to},function(ret){
+			// alert(from);
+			$("#ratio_result").show();
+			$("#sharpe").html('');
+			$("#variance").html('');
+			for(var i=0;i<ret.stock_list.length;i++){
+
+				$('#sharpe').append('<tr><td><span>'+ ret.stock_list[i] +'</span></td>	 <td><span>'+ ret.name_list[i]+'</span></td> <td><span>'+ ret.price_list[i] +'</span></td> <td><span>'	+ ret.sharpe_ratio[i] +'</span></td></tr>');
+				$('#variance').append('<tr><td><span>'+ ret.stock_list[i] +'</span></td>	 <td><span>'+ ret.name_list[i]+'</span></td> <td><span>'+ ret.price_list[i]+'</span></td> <td><span>'	+ ret.variance_ratio[i] +'</span></td></tr>');
+
+			}
+			$('#s_exp_return').html("预期收益率:"+ret.sharpe_result[0]);
+			$('#s_exp_variance').html("预期波动率:"+ret.sharpe_result[1]);
+			$('#s_sharpe').html("夏普指数:"+ret.sharpe_result[2]);
+
+			$('#v_exp_return').html("预期收益率:"+ret.variance_result[0]);
+			$('#v_exp_variance').html("预期波动率:"+ret.variance_result[1]);
+			$('#v_sharpe').html("夏普指数:"+ret.variance_result[2]);
+
+			// Paint_Returns(ret.return_str);
+
+			var dom = document.getElementById("container");
+			var myChart = echarts.init(dom);
+			var option = null;
+
+			var returns = JSON.parse(ret.return_str);
+			var dates = returns.map(function (item) {
+				return item[0];
+				});
+			var sharpe_data = returns.map(function (item) {
+				return item[1];
+				});
+			var variance_data = returns.map(function (item) {
+				return item[2];
+				});
+
+			option = {
+				tooltip : {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['夏普最优','风险最小']
+				},
+				toolbox: {
+					show : true,
+					feature : {
+					dataZoom : {show: true},
+					}
+				},
+				calculable : true,
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 0,
+					end : 100
+				},
+				xAxis : [
+					{
+						type : 'category',
+						boundaryGap : false,
+						data : dates
+					}
+				],
+				yAxis : [
+					{
+						type : 'value'
+					}
+				],
+				series : [
+					{
+						name:'夏普最优',
+						type:'line',
+						data: sharpe_data
+					},
+					{
+						name:'风险最小',
+						type:'line',
+						data: variance_data
+					}
+				]
+			};
+			myChart.setOption(option, true);
+
+			});
+
+
+
+		}
+			}
+</script>
+
+<script type="text/javascript">
+	function Paint_Returns(return_str){
+
+		var dom = document.getElementById("container");
+		var myChart = echarts.init(dom);
+		var option = null;
+
+		var returns = JSON.parse(return_str);
+		var dates = returns.map(function (item) {
+			return item[0];
+			});
+		var sharpe_data = returns.map(function (item) {
+			return item[1];
+			});
+		var variance_data = returns.map(function (item) {
+			return item[2];
+			});
+
+		option = {
+			tooltip : {
+				trigger: 'axis'
+			},
+			legend: {
+				data:['夏普最优','风险最小']
+			},
+			toolbox: {
+				show : true,
+				feature : {
+				dataZoom : {show: true},
+				}
+			},
+			calculable : true,
+			dataZoom : {
+				show : true,
+				realtime : true,
+				start : 0,
+				end : 100
+			},
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : dates
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					name:'夏普最优',
+					type:'line',
+					data: sharpe_data
+				},
+				{
+					name:'风险最小',
+					type:'line',
+					data: variance_data
+				}
+			]
+		};
+		myChart.setOption(option, true);
+	}
+</script>
+
+
+
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9KyUoYdA9bR6dMxeZKg9vDb16Ux5Ogap"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script src="{% static "finweb/js/stock_ratio.js" %}?ver=1"></script>
+</body>
+</html>
