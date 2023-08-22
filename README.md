@@ -18,7 +18,7 @@ Here's the translation for the provided content:
 ### I. System Operation Steps:
 
 1. Firstly, run the "sentiment_analysis.ipynb" within the "Sentiment Analysis" folder to update the stock recommendation list in the database.
-2. Then, navigate to the "STOCKWEBSITE" folder path. In the command prompt (cmd), enter "python manage.py runserver 0.0.0.0:8000".
+2. Then, navigate to the folder path. In the command prompt (cmd), enter "python manage.py runserver 0.0.0.0:8000".
 3. Access the website by entering the URL "127.0.0.1:8000/finweb".
 
 ### II. Required Packages for the System:
